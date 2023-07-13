@@ -8,7 +8,9 @@ public class ManejoDeArchivo {
 	
 	private File archivo;
 	private FileReader fr;
+	private FileWriter fw;
 	private BufferedReader leer;
+	private BufferedWriter escribir;
 	
 
 	public ManejoDeArchivo()
@@ -16,6 +18,11 @@ public class ManejoDeArchivo {
 		
 	}
 
+
+	public ManejoDeArchivo(String ruta)
+	{
+		setArchivo(ruta);
+	}
 	public File getArchivo() {
 		return archivo;
 	}
@@ -23,6 +30,27 @@ public class ManejoDeArchivo {
 
 	public void setArchivo(String ruta) {
 		this.archivo = new File(ruta);
+	}
+
+	public void crearArchivo(String ruta)
+	{
+		
+		setArchivo(ruta);
+		if(!archivo.exists())
+		{
+			try {
+				fw=new FileWriter(ruta, true);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			System.out.println("El archivo ya existe");
+		}
+		
 	}
 	
 	public void leerArchivo(String ruta)
@@ -95,6 +123,33 @@ public class ManejoDeArchivo {
 	
 	}
 	
+	public void escribirArchivo(String ruta,TreeSet<Persona>lista)
+	{
 	
+			try {
+				fw=new FileWriter(ruta);
+				escribir=new BufferedWriter(fw);
+				
+				for (Persona persona : lista) {
+					
+					escribir.write(persona.toString()+"\n");
+				}
+				
+				escribir.close();
+				fw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println("Se realizo la escritura");
+	}
+
+		
+		
 	
 }
+	
+	
+
